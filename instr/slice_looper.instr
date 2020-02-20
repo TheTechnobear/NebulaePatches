@@ -10,10 +10,9 @@ file,incremental,falling
 record,latching,rising
 nebconfigend
 
-; Grain looper
+; Slice looper
 ; (*) params have changed behaviour!
 ; based on Granular File/Buffer Looping Granular Instrument by Qu-bit Electronix, Stephen Hensley
-;
 ;
 ; Global Data from External Software
 ; All of the following globals are set from external software.
@@ -21,8 +20,8 @@ nebconfigend
 ; gilen[] - Array containing all file lengths
 ; gkpitch - percentage of original pitch. (Negative values allowed)
 ; gkspeed - percentage of original speed. (Negative values allowed)
-; gkloopstart - percentage of file to start at.
-; (*) gkloopsize - percentage of loopsize to play
+; (*) gkloopstart - slice, selected as v/oct , 1 semi = 1 slice
+; (*) gkloopsize - num of slices in sample: steps = 1,8,16,24,32,40,48,56,64
 ; gkdensity - 
 ; gkoverlap - 
 ; gkblend - percentage of granular sound (inverse percentage of dry audio file)
@@ -317,16 +316,39 @@ endif
 if klen == 0 then
     klen = giMaxRecordBuffer
 endif
+
 kconvertedlen = (klen * (kfilesr / sr))
-kloopstart = (gkloopstart * kconvertedlen)
+
+; size = slice num 1...64, in steps of 8
+knumslices = int(gkloopsize * 8) * 8
+if(knumslices == 0) then 
+    knumslices = 1
+endif 
+
+; start is taken as v/oct = 5 octave = 60 
+
+kslicelen = kconvertedlen / knumslices;
+
+; FIXME this is wrong, currently this is used for rnd grains,
 kloopscalar = gkloopsize
 ;kloopsize = ((kloopscalar * kloopscalar) * (kconvertedlen-kloopstart))
-kloopsize = (kloopscalar * kloopscalar) * kconvertedlen
+
+kslice = int(gkloopstart * 60) 
+kloopstart = (kslice * kslicelen)
+if (kloopstart > (kconvertedlen - kslicelen)) then
+    ; make loopstart at least 1 slice 
+    kloopstart = (kconvertedlen - kslicelen)
+endif
+;printks " knumslices %f \t kslice %f \t len %f \t kslicelen %f\t kloopstart %f \n", 1 , knumslices, kslice, kconvertedlen, kslicelen, kloopstart
+
+kloopsize = kslicelen;
 if (kloopsize > (kconvertedlen - kloopstart)) then
+    ; loopsize not exceed length of loop
 	kloopsize = (kconvertedlen - kloopstart)
 endif
+
 if (kloopsize <= 0.000035) then 
-	kloopsize = 0.000035
+    kloopsize = 0.000035
 endif
 
 ; Set Speed
@@ -737,7 +759,7 @@ if koverlaptrig == 1 then
     ;kcopyingbuffer = 1
 endif
 
-;printks "kbuffsize: %f\t krecordedbuff: %f\tkglen: %f\tklen: %f\tkloopscalar: %f\tkloopstart: %f\n",0.1, kbuffsize, krecordedbuff, kglen, klen, kloopscalar, kloopstart
+;printks "kbuffsize: %f\t krecordedbuff: %f\tkglen: %f\tklen: %f\tknumslices: %f\tkloopstart: %f\n",0.1, kbuffsize, krecordedbuff, kglen, klen, knumslices, kloopstart
 gkrecordstatus = krecordB
 ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; processing ;;;;;
