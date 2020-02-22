@@ -1,4 +1,4 @@
-#N canvas 417 102 1918 1062 10;
+#N canvas 0 23 1440 855 10;
 #X obj 70 44 netreceive 3000;
 #X obj 154 99 route start size density overlap blend window pitch speed
 record file source reset freeze;
@@ -112,6 +112,7 @@ window_alt pitch_alt record_alt file_alt source_alt freeze_alt;
 #X obj 1107 612 change -1;
 #X obj 565 594 * 60;
 #X obj 1106 708 print mode changed;
+#X obj 564 617 / 64;
 #X connect 0 0 1 0;
 #X connect 1 0 3 0;
 #X connect 1 1 4 0;
@@ -195,4 +196,5 @@ window_alt pitch_alt record_alt file_alt source_alt freeze_alt;
 #X connect 88 0 90 0;
 #X connect 89 0 91 0;
 #X connect 90 0 60 0;
-#X connect 91 0 53 0;
+#X connect 91 0 93 0;
+#X connect 93 0 53 0;
