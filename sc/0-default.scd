@@ -37,11 +37,12 @@ s.options.numOutputBusChannels = 2;
 s.waitForBoot{
 "Server Booted".postln;
 "Default patch".postln;
-}
+};
 
-~rPort=3000;
 
 (
+~rPort=3000;
+
 // messages coming from the nebulae
 OSCdef( \osc_speed, {
 	arg msg, time, addr, recvPort;
