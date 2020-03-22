@@ -1,4 +1,5 @@
 s = Server.default;
+s.options.memSize = 131072;
 
 s.options.bindAddress = "0.0.0.0";
 s.options.maxLogins = 4;

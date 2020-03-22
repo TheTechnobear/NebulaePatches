@@ -28,6 +28,7 @@ All of the secondary controls labelled, “alt” are accessed while holding dow
 
 
 s = Server.default;
+s.options.memSize = 131072;
 s.options.bindAddress = "0.0.0.0";
 s.options.maxLogins = 4;
 s.options.blockSize = 64;
