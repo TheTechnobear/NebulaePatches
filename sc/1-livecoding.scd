@@ -95,7 +95,7 @@ OSCdef( \osc_sourcegate, { |msg, time, addr, recvPort|if(~remote != nil) { ~remo
 // alt forms
 OSCdef( \osc_speed_alt, { |msg, time, addr, recvPort|if(~remote != nil) { ~remote.sendMsg(msg[0],msg[1]) }} ,
 '/neb/speed_alt',recvPort:~rPort);
-OSCdef( \osc_pitch, { |msg, time, addr, recvPort|if(~remote != nil) { ~remote.sendMsg(msg[0],msg[1]) }} ,
+OSCdef( \osc_pitch_alt, { |msg, time, addr, recvPort|if(~remote != nil) { ~remote.sendMsg(msg[0],msg[1]) }} ,
 '/neb/pitch_alt',recvPort:~rPort);
 OSCdef( \osc_start_alt, { |msg, time, addr, recvPort|if(~remote != nil) { ~remote.sendMsg(msg[0],msg[1]) }} ,
 '/neb/start_alt',recvPort:~rPort);
