@@ -126,17 +126,38 @@ OSCdef( \osc_freeze_alt, { |msg, time, addr, recvPort|if(~remote != nil) { ~remo
 
 
 /*
-m = NetAddr("127.0.0.1", ~rPort); // testing loopback
-m.sendMsg("/live/connect", '127.0.0.1',4000);
-m.sendMsg("/neb/pitch", 0.5);
-m.sendMsg("/neb/density", 0.6);
+// EXAMPLE PATCH USED ON REMOTE CLIENT
+(
+~nebulaeip= '192.168.1.65';
+s.options.maxLogins = 4;
+Server.default = s = Server.remote("nebulae", NetAddr(~nebulaeip.asString,57110),s.options,1);
+s.initTree;
+s.startAliveThread;
+)
+CmdPeriod.add({s.freeAll});
 
+// Communicate with the server
+s.plotTree; // show all active nodes
+s.queryAllNodes
+
+
+~localip = '192.168.1.18';
+~rPort=3000;
+//connect to live patch, and ask for redirection
+m = NetAddr(~nebulaeip.asString, ~rPort);
+m.sendMsg("/live/connect",~localip,~rPort);
+
+
+
+/// note from here on, the patch would be the same as run on the Nebulae
 (
 OSCdef( \nebRemote, {
-	|msg, time, addr, recvPort| 'remote->'.postln;msg[0].post;msg[1].postln;},'/neb/pitch',recvPort:4000 );
+	|msg, time, addr, recvPort| 'remote->'.postln;msg[0].post;msg[1].postln;},'/neb/pitch',recvPort:~rPort );
 
 OSCdef( \nebRemote2, {
-	|msg, time, addr, recvPort| 'remote->'.postln;msg[0].post;msg[1].postln;},'/neb/density',recvPort:4000 );
+	|msg, time, addr, recvPort| 'remote->'.postln;msg[0].post;msg[1].postln;},'/neb/density',recvPort:~rPort );
 )
+
+
 */
 

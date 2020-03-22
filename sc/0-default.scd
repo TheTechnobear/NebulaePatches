@@ -39,3 +39,144 @@ s.waitForBoot{
 "Default patch".postln;
 }
 
+~rPort=3000;
+
+(
+// messages coming from the nebulae
+OSCdef( \osc_speed, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/speed',recvPort:~rPort);
+
+OSCdef( \osc_pitch, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/pitch',recvPort:~rPort);
+
+OSCdef( \osc_start, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/start',recvPort:~rPort);
+
+OSCdef( \osc_size, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/size',recvPort:~rPort);
+
+OSCdef( \osc_density, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/density',recvPort:~rPort);
+
+OSCdef( \osc_overlap, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/overlap',recvPort:~rPort);
+
+OSCdef( \osc_window, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/window',recvPort:~rPort);
+
+OSCdef( \osc_reset, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/reset',recvPort:~rPort);
+
+OSCdef( \osc_freeze, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/freeze',recvPort:~rPort);
+
+OSCdef( \osc_record, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/record',recvPort:~rPort);
+
+OSCdef( \osc_file, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/file',recvPort:~rPort);
+
+OSCdef( \osc_freeze, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/freeze',recvPort:~rPort);
+
+OSCdef( \osc_source, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/source',recvPort:~rPort);
+
+OSCdef( \osc_filestate, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/filestate',recvPort:~rPort);
+
+OSCdef( \osc_sourcegate, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/sourcegate',recvPort:~rPort);
+
+// alt forms
+OSCdef( \osc_speed_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/speed_alt',recvPort:~rPort);
+
+OSCdef( \osc_pitch_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/pitch_alt',recvPort:~rPort);
+
+OSCdef( \osc_start_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/start_alt',recvPort:~rPort);
+
+OSCdef( \osc_size_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/size_alt',recvPort:~rPort);
+
+OSCdef( \osc_density_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/density_alt',recvPort:~rPort);
+
+OSCdef( \osc_overlap_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/overlap_alt',recvPort:~rPort);
+OSCdef( \osc_window_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/window_alt',recvPort:~rPort);
+
+OSCdef( \osc_reset_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/reset_alt',recvPort:~rPort);
+
+OSCdef( \osc_freeze_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/freeze_alt',recvPort:~rPort);
+
+OSCdef( \osc_record_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/record_alt',recvPort:~rPort);
+
+OSCdef( \osc_file_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/file_alt',recvPort:~rPort);
+
+OSCdef( \osc_freeze_alt, {
+	arg msg, time, addr, recvPort;
+},
+'/neb/freeze_alt',recvPort:~rPort);
+
+)
+
