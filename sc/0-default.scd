@@ -1,4 +1,18 @@
 /*
+Default Template : Mark Harris (aka TheTechnobear)
+This is an example of the what you might need for your supercollider patch on the Nebulae
+It shows recommended server options and incoming messages from nebulae via osc
+Note: if you want to do live coding/interaction from your remote computer, look at the live coding template
+
+usage:
+- copy template to use as starting point for new your patch
+- implement OSCdef that you want to use
+- remove OSCdef you do not need
+*/
+
+
+/*
+OSC message received
 All of the secondary controls labelled, “alt” are accessed while holding down the source button.
 • speed: 0-1 value of encoder + CV amount. Clicks between 0.625 and 0.375
 • pitch: 0-1 value of encoder + 1V/Oct amount. Clicks to 0.6
@@ -26,7 +40,6 @@ All of the secondary controls labelled, “alt” are accessed while holding dow
 • file_alt: latching 0 or 1 control. Button is falling edge sensitive
 */
 
-
 s = Server.default;
 s.options.memSize = 131072;
 s.options.bindAddress = "0.0.0.0";
@@ -40,6 +53,16 @@ s.waitForBoot{
 "Default patch".postln;
 };
 
+
+// - knobs/buttons/cv are received via osc, see OSCdef below
+// - audio input/output  - normal SC, use SoundIn.ar, Out.ar , as normal
+// - audio files - normal SC, use SoundFile.collect("/home/alarm/*"), then use Buffer.read
+// e.g.
+// ~audio_files.SoundFile.collect("/home/alarm/*")
+// z=Buffer.read(s,audio_files[0]);
+
+//OSCdef to receive cv/knobs/buttons from Nebulae
+//in practice, Id recommend you remove those you dont need, all are listed here for 'completeness'
 
 (
 ~rPort=3000;
