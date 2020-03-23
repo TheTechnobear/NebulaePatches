@@ -43,11 +43,16 @@ s.waitForBoot{
 	"Server Booted".postln;
 	"BufGrain patch".postln;
 
-	SynthDef(\bufgrainSynth, {
+	~path="/home/alarm/audio/*";~audio_files= List.new;
+	SoundFile.collect(~path).do { |f| ~audio_files.add(f.path);}
+
+	SynthDef(\sdGrainBuf, {
 		arg sndbuf, gate = 1,
 		amp = 0.6, density = 10,
-		dur=0.1,rate=1.0,
-		pos=0,interp=1;
+		dur=0.1, rate=1.0,
+		pos=0, interp=2,
+		pan=0, envbufnum = -1,
+		maxgrains=10;
 
 		var sig,env, gen;
 		env = EnvGen.kr(
@@ -58,22 +63,25 @@ s.waitForBoot{
 
 		gen = Impulse.kr(density);
 
-		sig = BufGrain.ar(
+		sig = GrainBuf.ar(
+			2,
 			gen,
 			dur,
 			sndbuf,
 			rate,
 			pos,
 			interp,
-			env
+			pan,
+			envbufnum,
+			maxgrains,
 		);
-		Out.ar(0,sig!2)
+		Out.ar(0,sig);
 	}
 	).add;
 
 	s.sync;
-	z = Buffer.read(s,Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff");
-	~synth = Synth("\bufgrainSynth",[\sndbuf, z]);
+	z = Buffer.read(s,~audio_files[0]);
+	~synth = Synth(\sdGrainBuf,[\sndbuf, z, \maxgrains, 10]);
 };
 
 (
